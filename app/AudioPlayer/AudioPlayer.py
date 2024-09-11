@@ -1,14 +1,10 @@
-
 import pygame
 
 import sys
 
 pathMap = {
-
     'success': './sounds/success.wav',
-
     'failure': './sounds/failure.wav',
-
 }
 
 
@@ -18,7 +14,6 @@ class AudioPlayer:
 
         if opts is None:
             opts = {}
-
         self.opts = opts
 
     def play(self):

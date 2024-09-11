@@ -1,6 +1,5 @@
-from coins.WebElementWatcher import WebElementWatcher
+from coins.BTC_Calculator import BTC_Calculator
 
 
 if __name__ == '__main__':
-    watcher = WebElementWatcher('https://www.binance.com/zh-CN/futures/BTCUSDT', interval=5)
-    watcher.start_watching()
+    print('null')
