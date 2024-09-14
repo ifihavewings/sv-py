@@ -4,6 +4,11 @@ import schedule
 from decimal import Decimal, getcontext
 from datetime import datetime
 
+# from app.players.AudioPlayer import AudioPlayer
+
+from app.players.AudioPlayer import AudioPlayer
+
+
 # 设置用于获取 BTC 价格的 API URL
 url = "https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT"
 # 设置用于获取 BTC Kline 数据的 API URL
@@ -107,7 +112,7 @@ class BTC_Calculator:
         current_time = datetime.now()
         # 格式化为 "2024-09-12 07:59:59" 的形式
         formatted_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
-
+        percetage = (close_price - open_price) / open_price
         # 输出结果
         text = f"""
         {opts['symbol']} data: {opts['limit']} {opts['unit']}
@@ -116,7 +121,8 @@ class BTC_Calculator:
         close: {close_price}
         high： {high_price}
         low： {low_price}
-        percentage：{(close_price - open_price) / open_price * 100:.2f}%
+        percentage：{ percetage * 100:.2f}%
+        percentage_raw: {percetage}
         Volume: {volume}
         quote_asset_volume: {quote_asset_volume}
         number_of_trades: {number_of_trades}
@@ -125,10 +131,19 @@ class BTC_Calculator:
         """
         print(text)  # 打印计算结果
         self.append_to_file('./data.txt', text)
+        self.warn(opts, percetage)
     # 将文本追加写入文件的函数
     def append_to_file(self, file_name, text):
         with open(file_name, 'a', encoding='utf-8') as file:  # 以追加模式打开文件
             file.write(text + '\n')  # 将文本写入文件，并换行
+
+    def warn(self, opts, percentage):
+        if abs(percentage) > 0.02:
+            palyer = AudioPlayer()
+            if percentage > 0:
+                palyer.play({'sound_type': 'success'})
+            else:
+                palyer.play({'sound_type': 'failure'})
 
 
 # 程序入口
