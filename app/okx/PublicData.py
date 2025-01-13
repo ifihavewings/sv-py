@@ -9,7 +9,7 @@ class PublicAPI:
     def __init__(self):
         """初始化 PublicAPI"""
         self.session = requests.Session()
-        # 设置默认请求头
+        # 设置请求头
         self.session.headers.update({
             "Accept": "application/json",
             "Content-Type": "application/json",
@@ -67,10 +67,7 @@ class PublicAPI:
     from datetime import datetime
 
     def convert_timestamp_to_datetime(self,timestamp):
-        # 将毫秒时间戳转换为秒时间戳
         timestamp_seconds = int(timestamp) / 1000
-        # 使用 datetime.fromtimestamp() 方法将时间戳转换为日期时间
         dt_object = datetime.fromtimestamp(timestamp_seconds)
-        # 格式化为 年-月-日 时:分:秒 格式
         return dt_object.strftime('%Y-%m-%d %H:%M:%S')
 

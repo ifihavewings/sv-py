@@ -8,22 +8,27 @@ class Strategy:
     def check_conditions(self) -> bool:
 
         should_alert = False
-        print(self.config)
-        if self.config.strategy == "price":
-            print('change')
-            print(self.klines)
-            print(self.config)
+        change_type = None
 
-            return False
-        elif self.config.strategy == "change":
-            print('change')
-            print(self.klines)
-            print(self.config)
-            # 计算涨幅
-            """
-            如果监测的是1分钟K线，则涨幅为1个点就报警
-            如果监测的是5分钟K线，则涨幅为2个点就报警
-            如果监测的是15分钟K线，则涨幅为4个点就报警
-            """
-            return False
-        return False
+        if "BTC" in self.config.symbol:
+            print("BTC-USDT")
+        else:
+            if self.config.strategy == "price":
+                should_alert =  False
+
+            elif self.config.strategy == "change":
+                latest_kline = self.klines[-1]
+                
+                # 计算涨幅
+                change = (float(latest_kline['close']) - float(latest_kline['open'])) / float(latest_kline['open']) * 100
+                change_abs = abs(change)
+                if change_abs >= self.config.target_change:
+                    should_alert =  True
+                    if change > 0:  
+                        change_type = 'up'
+                    else:
+                        change_type = 'down'
+                else:
+                    should_alert =  False
+            return {'should_alert': should_alert, 'change_type': change_type, 'change': change}
+

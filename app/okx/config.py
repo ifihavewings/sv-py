@@ -4,6 +4,17 @@ import os
 
 @dataclass
 class InspectorConfig:
+    """
+    监控配置
+    symbol: 交易对
+    interval: K线时间周期, 例如: 1m, 5m, 15m, 30m, 1h, 4h, 1d
+    target_price: 目标价格
+    target_change: 目标涨幅
+    check_interval: 检查间隔, 单位秒
+    limit: K线数量
+    strategy: 策略
+    debug: 是否开启调试
+    """
     symbol: str
     interval: str
     target_price: Optional[float] = None

@@ -30,11 +30,8 @@ from Inspector import PriceInspector
 
 # 测试 inspector
 try:
-    print(1)
-    config = InspectorConfig(symbol="BTC-USDT", interval="5m", target_price=100000, target_change=3, check_interval=30, limit=1, strategy="price")
+    config = InspectorConfig(symbol="AI16Z-USDT-SWAP", interval="5m", limit=1, target_price=100000, target_change=0.01, check_interval=5, strategy="change")
     inspector = PriceInspector(config)
     inspector.start_monitoring()
-    print(2)
 except Exception as e:
-    print(3)
     print(f"发生错误：{str(e)}")
