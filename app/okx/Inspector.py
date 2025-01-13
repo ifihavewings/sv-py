@@ -60,11 +60,11 @@ class PriceInspector:
             else:
                 sound_type = 'failure'
             self.play_alert({'sound_type': sound_type})
-            self.logger.success(f"{round(check_result['change'], 2)}% ---> {self.klines}")
+            self.logger.success(f"{self.config.symbol} @ {self.klines[-1]['close']} # {round(check_result['change'], 2)}% ---> {self.klines}")
 
             return True
         else:   
-            self.logger.info(f"{round(check_result['change'], 2)}% ---> {self.klines}")
+            self.logger.info(f"{self.config.symbol} @ {self.klines[-1]['close']} # {round(check_result['change'], 2)}% ---> {self.klines}")
             return False
         
 
